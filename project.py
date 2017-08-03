@@ -136,7 +136,7 @@ def getUserID(email):
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-@app.route('/gdisconnect')
+@app.route('/theshops/gdisconnect/')
 def gdisconnect():
     # check if user has an access token
     access_token = login_session.get('access_token')
@@ -224,6 +224,7 @@ def createShop():
 #edit a shop
 @app.route('/theshops/shop/<int:shop_id>/<trait>/', methods=['POST'])
 def editShop(shop_id, trait):
+    print ("hello")
     editedShop = session.query(Shop).filter_by(id=shop_id).one()
     if login_session['user_id'] != editedShop.owner_id:
         return jsonify("unauthorized")
@@ -331,5 +332,5 @@ app.secret_key = 'the_very_most_secret_of_keys'
 if __name__ == '__main__':
     #app.secret_key = 'the_very_most_secret_of_keys'
     app.debug = True
-    #app.run(host='0.0.0.0', port=5000)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=3000)
+    #app.run(host='0.0.0.0')

@@ -321,7 +321,7 @@ function createShop() {
     input.classList.remove('removed');
     input.focus();
   } else {
-    apiCall('/shop/create/', 'POST', (json) => {
+    apiCall('/shop/create', 'POST', (json) => {
       //add new product to clientSide data
       shopList['shops'].push(json['shop'])
       var id = json['shop'].id
@@ -434,7 +434,7 @@ function apiCall(url, method, callback, data) {
       }
     }
   }
-  xhttp.open(method, "/theshops"+url, true);
+  xhttp.open(method, "/theshops"+url+ "/", true);
   xhttp.send(data);
 }
 
