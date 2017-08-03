@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        font-family: sans-serif;
+        text-decoration: none;
+        color: PapayaWhip;
+      }
+      a {
+        color: PaleGreen;
+      }
+      h1 {
+        text-decoration: underline;
+      }
+      body {
+        background-color: PaleVioletRed;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><a href="javascript:window.location.reload();">twitch guide</a></h1>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+    "use strict";
+
+    (function () {
+      var channelList = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "brunofin" , "comster404"];
+      var url = "/twitch/"
+      for (var i = 0; i < channelList.length; i++) {
+        var parent = document.getElementById('container');
+        var element = document.createElement("p");
+        element.innerHTML = '*loading*';
+        element.setAttribute('id', channelList[i]);
+        parent.appendChild(element);
+        reqestData(url, channelList[i], display)
+      }
+    })();
+
+
+    function display(json, channelName) {
+      var parent = document.getElementById('container');
+      var element = document.getElementById(channelName);
+      element.innerHTML = '';
+      if (json[1] == 'true') {
+        element.style.fontWeight = "bold";
+      }
+      var name = document.createElement("a");
+      name.innerHTML = channelName
+      name.setAttribute('href', "https://www.twitch.tv/" +channelName)
+      element.appendChild(name);
+      element.innerHTML += json[0];
+      parent.appendChild(element);
+    }
+
+    function reqestData(url, channelName, callback) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var json = JSON.parse(xhttp.responseText);
+          callback(json, channelName);
+        }
+      }
+      xhttp.open("POST", url, true);
+      xhttp.send(channelName);
+    }
+
+    </script>
+  </body>
+</html>

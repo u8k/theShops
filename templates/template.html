@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP SHOP</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//apis.google.com/js/platform.js?onload=start"></script>
+  </head>
+
+  <body class="background-tint">
+
+    <section id="user-info-container">
+      <div id="signInButton">
+        <span class="g-signin"
+          data-scope="openid email"
+          data-clientid="873697446559-iior4v0s4s9ud99jq0340i7h1mnjuvfd.apps.googleusercontent.com"
+          data-redirecturi="postmessage"
+          data-accesstype="offline"
+          data-cookiepolicy="single_host_origin"
+          data-callback="signInCallback"
+          data-approvalprompt="force">
+        </span>
+      </div>
+      <p id="user-status"></p>
+      <button id="logout" class="removed button" onclick="logout()">logout</button>
+    </section>
+
+    <header class="title-container">
+      <h1>the shops</h1>
+      <h2>at</h2>
+      <h2>terrace vista heights</h2>
+      <h4>your ultimate modern boutique consumer experience</h4>
+
+      <button id="create-new-shop" class="removed button"
+        onclick="createShop(this)">create new shop</button>
+        <br>
+      <input type="text" id="input-create-shop" class="input removed"
+        maxlength="100" placeholder="shop name">
+    </header>
+
+    <div id="shop-directory">
+      {% for i in shops %}
+        <div class="shop" id="shop{{i.id}}"
+          onclick="showShopDetailPanel({{i.id}})">
+          <img src="{{i.image}}" class="front-shop-image"
+            id="front-shop-image{{i.id}}" alt="owner provided shop image">
+          <div class="front-shop-name"
+            id="front-shop-name{{i.id}}">{{i.name}}</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div id="closeShopDetailPanel" class="hidden"
+      onclick="closeShopDetailPanel()"></div>
+
+    <div id="panel-wrapper" class="hidden background-tint">
+      <div id="shop-detail-panel">
+        <div id="detail-panel-top"></div>
+        <h3 id="featured-products">featured products</h3>
+        <div id="inventory-container"></div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+      getVars('{{userId}}', '{{STATE}}', '{{email}}');
+      checkUser();
+    </script>
+  </body>
+</html>
